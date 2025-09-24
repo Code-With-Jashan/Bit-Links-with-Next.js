@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';
 import { Bounce } from 'react-toastify';
+import { useMemo } from 'react';
 
 const Shorten = () => {
     const [url, seturl] = useState("")
@@ -12,7 +13,7 @@ const Shorten = () => {
   const [shortUrlError, setShortUrlError] = useState("")
 
      // URL validation regex
-  const urlPattern = /^https?:\/\/.+/
+  const urlPattern =  useMemo(() => /^https?:\/\/.+/, []);
 
   // Live validation
   useEffect(() => {
