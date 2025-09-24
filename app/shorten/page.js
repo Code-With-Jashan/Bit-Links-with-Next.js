@@ -29,7 +29,7 @@ const Shorten = () => {
     } else {
       setShortUrlError("")
     }
-  }, [url, shorturl])
+  }, [url, shorturl, urlPattern])
 
   const isFormValid = url && shorturl && !urlError && !shortUrlError
 
