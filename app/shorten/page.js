@@ -53,7 +53,7 @@ const Shorten = () => {
         fetch("/api/generate", requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                setgenerated(`${process.env.NEXT_PUBLIC_HOST}/${shorturl}`)
+                setgenerated(`/${shorturl}`)
                 seturl("")
                 setshorturl("")
                 //console.log(result)
@@ -133,7 +133,7 @@ const Shorten = () => {
                            {shortUrlError && <span className="text-red-600 text-xs">{shortUrlError}</span>}
                     <button onClick={generate} className='bg-purple-500 rounded-lg shadow-lg p-3 py-1 my-3 font-bold text-white disabled:bg-purple-400 disabled:cursor-not-allowed disabled:opacity-8' disabled={!isFormValid }>Generate</button>
                 </div>
-                {generated && <> <span className='font-bold text-lg'>Your Link</span> <code> <Link target="_blank" href={generated}>{generated}</Link>
+                {generated && <> <span className='font-bold text-lg'>Your Link</span> <code> <Link target="_blank" href={generated}>{process.env.NEXT_PUBLIC_HOST}{generated}</Link>
                 </code> </>}
             </div>
         </>
