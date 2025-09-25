@@ -41,7 +41,7 @@ const Shorten = () => {
 
         setLoading(true)
 
-            const delay = new Promise(res => setTimeout(res, 500));
+     
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -54,8 +54,8 @@ const Shorten = () => {
         try {
             const response = await fetch("/api/generate", { method: "POST", headers: myHeaders, body: raw })
             const result = await response.json()
-            
-                 await delay;
+
+        
 
             if (result.success) {
                 setGenerated(`/${shorturl}`)
