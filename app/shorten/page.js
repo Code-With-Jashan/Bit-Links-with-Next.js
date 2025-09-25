@@ -55,7 +55,7 @@ const Shorten = () => {
             // Ensure spinner shows at least 500ms
             const elapsed = Date.now() - start;
             if (elapsed < 500) {
-                await new Promise((res) => setTimeout(res, 500 - elapsed));
+                await new Promise((res) => setTimeout(res, 300 - elapsed));
             }
 
             // Show the generated link in all cases
