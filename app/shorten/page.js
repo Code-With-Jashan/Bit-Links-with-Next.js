@@ -54,7 +54,7 @@ const Shorten = () => {
         try {
             const response = await fetch("/api/generate", { method: "POST", headers: myHeaders, body: raw })
             const result = await response.json()
-
+            
                  await delay;
 
             if (result.success) {
