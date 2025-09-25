@@ -38,63 +38,60 @@ const Shorten = () => {
     const isFormValid = url && shorturl && !urlError && !shortUrlError
 
     const generate = async () => {
+        if (!isFormValid) return;
 
-        setLoading(true)
-
-     
-
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        const raw = JSON.stringify({
-            "url": url,
-            "shorturl": shorturl
-        });
+        setLoading(true);
+        const start = Date.now();
 
         try {
-            const response = await fetch("/api/generate", { method: "POST", headers: myHeaders, body: raw })
-            const result = await response.json()
+            const res = await fetch("/api/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url, shorturl }),
+            });
 
-        
+            const result = await res.json();
 
+            // Ensure spinner shows at least 500ms
+            const elapsed = Date.now() - start;
+            if (elapsed < 500) {
+                await new Promise((res) => setTimeout(res, 500 - elapsed));
+            }
+
+            // Show the generated link in all cases
+            const finalShort = result.shortUrl || `/${shorturl}`; // use server value if exists
+            setgenerated(finalShort);
+
+            // Toast messages
             if (result.success) {
-                setGenerated(`/${shorturl}`)
-                setUrl("")
-                setShorturl("")
                 toast.success(result.message || "URL generated successfully!", {
                     position: "top-right",
-                    className: "!top-16",
                     autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
                     transition: Bounce,
-                })
+                });
             } else {
-                toast.warning(result.message || "Something went wrong!", {
+                toast.info(result.message || "URL already exists, showing existing link", {
                     position: "top-right",
-                    className: "!top-16",
                     autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    theme: "light",
                     transition: Bounce,
-                })
+                });
             }
-        } catch (error) {
+
+            // Clear inputs
+            seturl("");
+            setshorturl("");
+
+        } catch (err) {
+            console.error(err);
             toast.error("Server error. Please try again.", {
                 position: "top-right",
                 autoClose: 5000,
-                theme: "light",
-            })
+            });
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
+
 
 
     return (
@@ -153,9 +150,9 @@ const Shorten = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="mt-4 text-center md:text-left"
+                        className="mt-4 text-center "
                     >
-                        <span className="font-bold text-lg block mb-2">Your Link</span>
+                        <span className="font-bold text-lg block mb-2">Your Link </span>
                         <code className="break-all">
                             <Link className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent font-semibold transition duration-100 hover:scale-105' target="_blank" href={generated}>
                                 {process.env.NEXT_PUBLIC_HOST}{generated}
