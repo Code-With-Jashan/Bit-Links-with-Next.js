@@ -39,9 +39,9 @@ const Navbar = () => {
         <div className="absolute top-16 left-0 w-full bg-purple-800 md:hidden shadow-lg z-50">
           <ul className="flex flex-col items-center justify-center gap-4 py-6">
             <Link href="/" onClick={() => setIsOpen(false)}><li>Home</li></Link>
-            <Link href="#" onClick={() => setIsOpen(false)}><li>About</li></Link>
+            <Link href="/about" onClick={() => setIsOpen(false)}><li>About</li></Link>
             <Link href="/shorten" onClick={() => setIsOpen(false)}><li>Shorten</li></Link>
-            <Link href="#" onClick={() => setIsOpen(false)}><li>Contact Us</li></Link>
+            <Link href="/contactus" onClick={() => setIsOpen(false)}><li>Contact Us</li></Link>
             <li className="flex flex-col gap-3 justify-center items-center">
               <Link href="/shorten" onClick={() => setIsOpen(false)}>
                 <button className="bg-purple-500 rounded-lg shadow-lg px-4 py-1 font-bold">
